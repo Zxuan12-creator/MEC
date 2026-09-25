@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Petugas - MEC Mart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+    <div>
+        <span class="eyebrow">MEC MART</span>
+        <h1>Dashboard Petugas</h1>
+        <p>Kelola antrian dan teruskan pesanan ke bagian minuman/makanan.</p>
+    </div>
+    <a href="/" class="secondary-btn">← Toko</a>
+</header>
+
+<main class="admin-container">
+    <div class="admin-toolbar">
+        <div>
+            <b id="orderCount">0 pesanan</b>
+            <span class="muted"> • update otomatis setiap 5 detik</span>
+        </div>
+        <button class="secondary-btn" onclick="loadOrders()">↻ Refresh</button>
+    </div>
+    <div id="ordersList" class="orders-list"></div>
+</main>
+
+<script>
+let orders = [];
+let staffWhatsapp = {};
+
+function rupiah(n) {
+    return "Rp" + Number(n || 0).toLocaleString("id-ID");
+}
+
+async function loadConfig() {
+    const res = await fetch("/api/config");
+    const data = await res.json();
+    staffWhatsapp = data.staff_whatsapp || {};
+}
+
+async function loadOrders() {
+    try {
+        const res = await fetch("/api/admin/orders");
+        const data = await res.json();
+        orders = data.orders || [];
+        document.getElementById("orderCount").textContent = orders.length + " pesanan";
+        renderOrders();
+    } catch (e) {
+        document.getElementById("ordersList").innerHTML =
+            '<div class="empty">Gagal mengambil data pesanan.</div>';
+    }
+}
+
+function statusLabel(status) {
+    return {
+        waiting: "🟡 Menunggu diproses",
+        making: "🟠 Sedang dibuat",
+        ready: "🔵 Siap diambil / diantar",
+        done: "🟢 Selesai"
+    }[status] || status;
+}
+
+function renderOrders() {
+    const box = document.getElementById("ordersList");
+
+    if (!orders.length) {
+        box.innerHTML = '<div class="empty">Belum ada pesanan.</div>';
+        return;
+    }
+
+    box.innerHTML = orders.map(order => {
+        const drinks = order.items.filter(i => i.section === "minuman");
+        const foods = order.items.filter(i => i.section === "makanan");
+
+        return `
+        <article class="order-card">
+            <div class="order-top">
+                <div>
+                    <span class="queue-badge">#${String(order.queue_number).padStart(3, "0")}</span>
+                    <b>${escapeHtml(order.order_number)}</b>
+                </div>
+                <span class="status-badge">${statusLabel(order.status)}</span>
+            </div>
+
+            <div class="order-info">
+                <div><b>👤 ${escapeHtml(order.customer_name)}</b><br>📞 ${escapeHtml(order.phone)}</div>
+                <div>${order.delivery_method === "delivery"
+                    ? "🛵 <b>Delivery</b><br>🏫 " + escapeHtml(order.class_name || "-")
+                    : "🚶 <b>Ambil sendiri</b>"}</div>
+                <div>💳 ${order.payment_method.toUpperCase()}<br>💰 <b>${rupiah(order.total)}</b></div>
+            </div>
+
+            <div class="order-items">
+                ${drinks.length ? `<div class="section-order"><b>🧋 BAGIAN MINUMAN</b>${itemsHtml(drinks)}</div>` : ""}
+                ${foods.length ? `<div class="section-order"><b>🍱 BAGIAN MAKANAN</b>${itemsHtml(foods)}</div>` : ""}
+            </div>
+
+            ${order.note ? `<div class="order-note">📝 ${escapeHtml(order.note)}</div>` : ""}
+
+            <div class="order-actions">
+                ${drinks.length ? `<button class="wa-btn" onclick="sendWhatsApp(${order.id}, 'minuman')">📱 Kirim Minuman</button>` : ""}
+                ${foods.length ? `<button class="wa-btn" onclick="sendWhatsApp(${order.id}, 'makanan')">📱 Kirim Makanan</button>` : ""}
+                <select onchange="changeStatus(${order.id}, this.value)">
+                    <option value="">Ubah status...</option>
+                    <option value="waiting">Menunggu</option>
+                    <option value="making">Sedang dibuat</option>
+                    <option value="ready">Siap</option>
+                    <option value="done">Selesai</option>
+                </select>
+            </div>
+        </article>`;
+    }).join("");
+}
+
+function itemsHtml(items) {
+    return items.map(i =>
+        `<div class="item-row"><span>${escapeHtml(i.product_name)} × ${i.quantity}</span><b>${rupiah(i.subtotal)}</b></div>`
+    ).join("");
+}
+
+function buildWhatsappMessage(order, section) {
+    const items = order.items.filter(i => i.section === section);
+    const title = section === "minuman" ? "🧋 BAGIAN MINUMAN" : "🍱 BAGIAN MAKANAN";
+
+    let msg = `🔔 PESANAN MEC MART\n\n`;
+    msg += `Antrian: #${String(order.queue_number).padStart(3, "0")}\n`;
+    msg += `Pesanan: ${order.order_number}\n\n`;
+    msg += `${title}\n`;
+    items.forEach(i => {
+        msg += `- ${i.product_name} × ${i.quantity}\n`;
+    });
+
+    msg += `\n`;
+    msg += order.delivery_method === "delivery"
+        ? `🛵 DELIVERY\n🏫 Kelas: ${order.class_name || "-"}\n`
+        : `🚶 AMBIL SENDIRI\n`;
+
+    msg += `👤 Pemesan: ${order.customer_name}\n`;
+    msg += `📞 HP: ${order.phone}\n`;
+    msg += `💳 Pembayaran: ${order.payment_method.toUpperCase()}\n`;
+    msg += `💰 Total order: ${rupiah(order.total)}\n`;
+    if (order.note) msg += `📝 Catatan: ${order.note}\n`;
+
+    return msg;
+}
+
+function sendWhatsApp(orderId, section) {
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    const number = staffWhatsapp[section];
+    if (!number) {
+        alert("Nomor WhatsApp bagian " + section + " belum diatur di app.py.");
+        return;
+    }
+
+    const message = buildWhatsappMessage(order, section);
+    const url = "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
+}
+
+async function changeStatus(id, status) {
+    if (!status) return;
+
+    const res = await fetch("/api/orders/" + id + "/status", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({status})
+    });
+
+    const data = await res.json();
+    if (!data.success) {
+        alert(data.message || "Gagal mengubah status.");
+        return;
+    }
+    loadOrders();
+}
+
+function escapeHtml(text) {
+    return String(text ?? "").replace(/[&<>"']/g, char => ({
+        "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+    }[char]));
+}
+
+loadConfig().then(loadOrders);
+setInterval(loadOrders, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MUTU ENTERPREUNER CLUB MART</title>
+
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            M
+        </div>
+
+        <div class="logo-text">
+            <h1>MUTU</h1>
+            <span>ENTERPREUNER CLUB MART</span>
+        </div>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari makanan atau minuman..."
+            onkeyup="searchProduct()"
+        >
+
+        <button onclick="searchProduct()">
+            🔍
+        </button>
+
+    </div>
+
+
+    <div class="header-actions">
+
+        <button class="header-btn">
+            👤
+            <span>Akun</span>
+        </button>
+
+        <button
+            class="cart-btn"
+            onclick="openCart()"
+        >
+            🛒
+            <span>Keranjang</span>
+            <b id="cartCount">0</b>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="#home">Home</a>
+
+        <a href="#minuman">
+            🥤 Minuman
+        </a>
+
+        <a href="#makanan">
+            🍱 Makanan
+        </a>
+
+        <a href="#batik">
+            🧵 Batik
+        </a>
+
+        <a href="#tentang">
+            ℹ️ Tentang MEC
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            ☕ MEC FOOD & DRINK
+        </span>
+
+        <h2>
+            Jajan Enak,
+            <br>
+
+            <span>
+                Harga Bersahabat.
+            </span>
+        </h2>
+
+        <p>
+            Nikmati berbagai pilihan makanan dan minuman
+            dari MUTU ENTERPREUNER CLUB.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                href="#minuman"
+                class="primary-button"
+            >
+                Lihat Menu
+            </a>
+
+            <a
+                href="#batik"
+                class="secondary-button"
+            >
+                Batik Coming Soon
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="hero-card-icon">
+            ☕
+        </div>
+
+        <h3>
+            MENU MEC
+        </h3>
+
+        <p>
+            Minuman • Makanan • Batik
+        </p>
+
+        <div class="hero-price">
+            Mulai Rp5.000
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INFO
+===================================================== -->
+
+<section class="features">
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            💰
+        </div>
+
+        <div>
+            <h3>Harga Pelajar</h3>
+            <p>
+                Enak tanpa bikin kantong berat.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🥤
+        </div>
+
+        <div>
+            <h3>Menu Beragam</h3>
+            <p>
+                Minuman dan makanan pilihan MEC.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🎓
+        </div>
+
+        <div>
+            <h3>Karya Siswa</h3>
+            <p>
+                Dikembangkan oleh anggota MEC.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="feature">
+
+        <div class="feature-icon">
+            🧵
+        </div>
+
+        <div>
+            <h3>Batik Segera Hadir</h3>
+            <p>
+                Nantikan koleksi batik MEC.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MINUMAN
+===================================================== -->
+
+<section
+    class="section"
+    id="minuman"
+>
+
+    <div class="section-heading">
+
+        <div>
+            <span class="section-label">
+                MENU MEC
+            </span>
+
+            <h2>
+                Minuman
+            </h2>
+
+            <p>
+                Pilihan minuman favorit dengan harga bersahabat.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <!-- THAI TEA -->
+
+        <div
+            class="product-card"
+            data-name="Thai Tea"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink thai-tea">
+
+                <span class="product-emoji">
+                    🧋
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Thai Tea
+                </h3>
+
+                <p class="product-description">
+                    Thai tea manis dan creamy.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp6.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Thai Tea', 6000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MATCHA -->
+
+        <div
+            class="product-card"
+            data-name="Matcha"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink matcha">
+
+                <span class="product-emoji">
+                    🍵
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Matcha
+                </h3>
+
+                <p class="product-description">
+                    Matcha dengan rasa khas yang lembut.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp8.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Matcha', 8000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BLACKCURRANT -->
+
+        <div
+            class="product-card"
+            data-name="Blackcurrant"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink blackcurrant">
+
+                <span class="product-emoji">
+                    🫐
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Blackcurrant
+                </h3>
+
+                <p class="product-description">
+                    Minuman segar rasa blackcurrant.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp5.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Blackcurrant', 5000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LATTE -->
+
+        <div
+            class="product-card"
+            data-name="Latte"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink latte">
+
+                <span class="product-emoji">
+                    ☕
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Latte
+                </h3>
+
+                <p class="product-description">
+                    Kopi susu creamy dan lembut.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp6.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Latte', 6000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LATTE ART -->
+
+        <div
+            class="product-card"
+            data-name="Latte + Art"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink latte-art">
+
+                <span class="product-emoji">
+                    🎨☕
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Latte + Art
+                </h3>
+
+                <p class="product-description">
+                    Latte dengan sentuhan coffee art.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp8.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Latte + Art', 8000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHOCOLATE -->
+
+        <div
+            class="product-card"
+            data-name="Chocolate"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink chocolate">
+
+                <span class="product-emoji">
+                    🍫
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Chocolate
+                </h3>
+
+                <p class="product-description">
+                    Cokelat manis dan nikmat.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp6.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Chocolate', 6000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ESPRESSO -->
+
+        <div
+            class="product-card"
+            data-name="Espresso"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink espresso">
+
+                <span class="product-emoji">
+                    ☕
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Espresso
+                </h3>
+
+                <p class="product-description">
+                    Kopi espresso dengan rasa kuat.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp8.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Espresso', 8000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AMERICANO -->
+
+        <div
+            class="product-card"
+            data-name="Americano"
+            data-category="minuman"
+        >
+
+            <div class="product-image drink americano">
+
+                <span class="product-emoji">
+                    ☕
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MINUMAN
+                </span>
+
+                <h3>
+                    Americano
+                </h3>
+
+                <p class="product-description">
+                    Kopi hitam sederhana dan nikmat.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        Rp5.000
+                    </strong>
+
+                    <button
+                        class="add-cart"
+                        onclick="addToCart('Americano', 5000)"
+                    >
+                        + Keranjang
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAKANAN
+===================================================== -->
+
+<section
+    class="section food-section"
+    id="makanan"
+>
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                MENU MEC
+            </span>
+
+            <h2>
+                Makanan
+            </h2>
+
+            <p>
+                Pilihan makanan yang cocok untuk menemani nongkrong.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="products">
+
+
+        <!-- KENTANG -->
+
+        <div class="product-card">
+
+            <div class="product-image food potato">
+
+                <span class="product-emoji">
+                    🍟
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MAKANAN
+                </span>
+
+                <h3>
+                    Kentang
+                </h3>
+
+                <p class="product-description">
+                    Kentang goreng renyah.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong class="soon-price">
+                        Harga segera tersedia
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DIMSUM -->
+
+        <div class="product-card">
+
+            <div class="product-image food dimsum">
+
+                <span class="product-emoji">
+                    🥟
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MAKANAN
+                </span>
+
+                <h3>
+                    Dimsum
+                </h3>
+
+                <p class="product-description">
+                    Dimsum hangat dan lezat.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong class="soon-price">
+                        Harga segera tersedia
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GYOZA -->
+
+        <div class="product-card">
+
+            <div class="product-image food gyoza">
+
+                <span class="product-emoji">
+                    🥟
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MAKANAN
+                </span>
+
+                <h3>
+                    Gyoza
+                </h3>
+
+                <p class="product-description">
+                    Gyoza dengan kulit lembut dan gurih.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong class="soon-price">
+                        Harga segera tersedia
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DUMPLING -->
+
+        <div class="product-card">
+
+            <div class="product-image food dumpling">
+
+                <span class="product-emoji">
+                    🥟
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MAKANAN
+                </span>
+
+                <h3>
+                    Dumpling
+                </h3>
+
+                <p class="product-description">
+                    Dumpling gurih untuk teman santai.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong class="soon-price">
+                        Harga segera tersedia
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ONIGIRI -->
+
+        <div class="product-card">
+
+            <div class="product-image food onigiri">
+
+                <span class="product-emoji">
+                    🍙
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MAKANAN
+                </span>
+
+                <h3>
+                    Onigiri
+                </h3>
+
+                <p class="product-description">
+                    Onigiri praktis dan mengenyangkan.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong class="soon-price">
+                        Harga segera tersedia
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUSHI -->
+
+        <div class="product-card">
+
+            <div class="product-image food sushi">
+
+                <span class="product-emoji">
+                    🍣
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <span class="category">
+                    MAKANAN
+                </span>
+
+                <h3>
+                    Sushi
+                </h3>
+
+                <p class="product-description">
+                    Sushi pilihan dengan cita rasa khas.
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong class="soon-price">
+                        Harga segera tersedia
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     BATIK COMING SOON
+===================================================== -->
+
+<section
+    class="batik-coming-soon"
+    id="batik"
+>
+
+    <div class="batik-content">
+
+        <span class="coming-badge">
+            ✨ COMING SOON
+        </span>
+
+        <div class="batik-icon">
+            🧵
+        </div>
+
+        <h2>
+            BATIK MEC
+        </h2>
+
+        <p>
+            Koleksi batik dari MUTU ENTERPREUNER CLUB
+            sedang dipersiapkan untuk kamu.
+        </p>
+
+        <div class="coming-title">
+            SEGERA HADIR
+        </div>
+
+        <span class="coming-text">
+            Nantikan produk batik dan karya lokal MEC.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TENTANG
+===================================================== -->
+
+<section
+    class="about"
+    id="tentang"
+>
+
+    <div class="about-content">
+
+        <span class="section-label">
+            TENTANG KAMI
+        </span>
+
+        <h2>
+            MUTU ENTERPREUNER CLUB
+        </h2>
+
+        <p>
+            MUTU ENTERPREUNER CLUB merupakan wadah kreativitas
+            dan kewirausahaan siswa. Melalui MEC Mart,
+            kami menghadirkan berbagai produk makanan,
+            minuman, dan karya kreatif.
+        </p>
+
+        <p>
+            Setiap produk menjadi bagian dari proses belajar
+            siswa dalam mengembangkan jiwa kewirausahaan.
+        </p>
+
+    </div>
+
+
+    <div class="about-stats">
+
+        <div>
+            <strong>
+                8+
+            </strong>
+
+            <span>
+                Minuman
+            </span>
+        </div>
+
+        <div>
+            <strong>
+                6+
+            </strong>
+
+            <span>
+                Makanan
+            </span>
+        </div>
+
+        <div>
+            <strong>
+                1
+            </strong>
+
+            <span>
+                Batik Coming Soon
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-main">
+
+        <div>
+
+            <div class="footer-logo">
+                MUTU
+            </div>
+
+            <p>
+                ENTERPREUNER CLUB MART
+            </p>
+
+            <span>
+                Food • Drink • Creative
+            </span>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Menu
+            </h3>
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#minuman">
+                Minuman
+            </a>
+
+            <a href="#makanan">
+                Makanan
+            </a>
+
+            <a href="#batik">
+                Batik
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                MEC
+            </h3>
+
+            <a href="#tentang">
+                Tentang Kami
+            </a>
+
+            <a href="#">
+                Kontak
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        © 2026 MUTU ENTERPREUNER CLUB MART
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     CART MODAL
+===================================================== -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="closeCartOutside(event)"
+>
+
+    <div
+        class="cart-panel"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="cart-header">
+
+            <div>
+
+                <span>
+                    PESANAN
+                </span>
+
+                <h2>
+                    Keranjang
+                </h2>
+
+            </div>
+
+            <button
+                class="close-cart"
+                onclick="closeCart()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="cart-items"
+            id="cartItems"
+        >
+
+            <div class="empty-cart">
+
+                <div>
+                    🛒
+                </div>
+
+                <h3>
+                    Keranjang masih kosong
+                </h3>
+
+                <p>
+                    Yuk pilih menu favoritmu.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="cartTotal">
+                    Rp0
+                </strong>
+
+            </div>
+
+            <button
+                class="checkout"
+                onclick="checkout()"
+            >
+                Checkout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT SEDERHANA
+===================================================== -->
+
+<script>
+
+let cart = [];
+
+
+/* ================================
+   FORMAT RUPIAH
+================================ */
+
+function formatRupiah(number) {
+
+    return "Rp" + number.toLocaleString("id-ID");
+
+}
+
+
+/* ================================
+   ADD TO CART
+================================ */
+
+function addToCart(name, price) {
+
+    const existing =
+        cart.find(item => item.name === name);
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            name: name,
+
+            price: price,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    updateCart();
+
+    openCart();
+
+}
+
+
+/* ================================
+   UPDATE CART
+================================ */
+
+function updateCart() {
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const cartTotal =
+        document.getElementById("cartTotal");
+
+
+    const totalQuantity =
+        cart.reduce(
+            (total, item) =>
+                total + item.quantity,
+            0
+        );
+
+
+    const totalPrice =
+        cart.reduce(
+            (total, item) =>
+                total +
+                (item.price * item.quantity),
+            0
+        );
+
+
+    cartCount.textContent =
+        totalQuantity;
+
+
+    cartTotal.textContent =
+        formatRupiah(totalPrice);
+
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div>🛒</div>
+
+                <h3>
+                    Keranjang masih kosong
+                </h3>
+
+                <p>
+                    Yuk pilih menu favoritmu.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    cartItems.innerHTML =
+        cart.map((item, index) => `
+
+            <div class="cart-item">
+
+                <div class="cart-item-icon">
+                    ☕
+                </div>
+
+                <div class="cart-item-info">
+
+                    <h3>
+                        ${item.name}
+                    </h3>
+
+                    <span>
+                        ${formatRupiah(item.price)}
+                    </span>
+
+                    <div class="quantity">
+
+                        <button
+                            onclick="changeQuantity(${index}, -1)"
+                        >
+                            −
+                        </button>
+
+                        <b>
+                            ${item.quantity}
+                        </b>
+
+                        <button
+                            onclick="changeQuantity(${index}, 1)"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="remove-item"
+                    onclick="removeItem(${index})"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* ================================
+   CHANGE QUANTITY
+================================ */
+
+function changeQuantity(index, amount) {
+
+    cart[index].quantity += amount;
+
+
+    if (cart[index].quantity <= 0) {
+
+        cart.splice(index, 1);
+
+    }
+
+
+    updateCart();
+
+}
+
+
+/* ================================
+   REMOVE ITEM
+================================ */
+
+function removeItem(index) {
+
+    cart.splice(index, 1);
+
+    updateCart();
+
+}
+
+
+/* ================================
+   OPEN CART
+================================ */
+
+function openCart() {
+
+    document
+        .getElementById("cartOverlay")
+        .classList.add("active");
+
+    document.body.classList.add("no-scroll");
+
+}
+
+
+/* ================================
+   CLOSE CART
+================================ */
+
+function closeCart() {
+
+    document
+        .getElementById("cartOverlay")
+        .classList.remove("active");
+
+    document.body.classList.remove("no-scroll");
+
+}
+
+
+/* ================================
+   CLICK OUTSIDE
+================================ */
+
+function closeCartOutside(event) {
+
+    if (
+        event.target.id ===
+        "cartOverlay"
+    ) {
+
+        closeCart();
+
+    }
+
+}
+
+
+/* ================================
+   SEARCH
+================================ */
+
+function searchProduct() {
+
+    const keyword =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const products =
+        document.querySelectorAll(
+            ".product-card"
+        );
+
+
+    products.forEach(product => {
+
+        const name =
+            product
+                .dataset
+                .name
+                ?.toLowerCase() || "";
+
+
+        const text =
+            product
+                .innerText
+                .toLowerCase();
+
+
+        if (
+            name.includes(keyword) ||
+            text.includes(keyword)
+        ) {
+
+            product.style.display = "";
+
+        } else {
+
+            product.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* ================================
+   CHECKOUT
+================================ */
+
+function checkout() {
+
+    if (cart.length === 0) {
+
+        alert(
+            "Keranjang masih kosong."
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Pesanan siap checkout!\n\n" +
+
+        "Backend Flask + MySQL " +
+        "akan digunakan untuk menyimpan order."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
