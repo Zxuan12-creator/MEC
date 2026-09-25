@@ -91,7 +91,16 @@ function renderOrders() {
                 <div>${order.delivery_method === "delivery"
                     ? "🛵 <b>Delivery</b><br>🏫 " + escapeHtml(order.class_name || "-")
                     : "🚶 <b>Ambil sendiri</b>"}</div>
-                <div>💳 ${order.payment_method.toUpperCase()}<br>💰 <b>${rupiah(order.total)}</b></div>
+                <div>
+    💳 ${order.payment_method.toUpperCase()}<br>
+    💰 <b>${rupiah(order.total)}</b><br>
+    ${order.payment_method === "qris"
+        ? (order.payment_status === "paid"
+            ? '<span class="payment-paid">✅ Sudah dibayar</span>'
+            : '<span class="payment-pending">⚠️ Belum diverifikasi</span>')
+        : '<span class="payment-cod">💵 COD</span>'
+    }
+                </div>
             </div>
 
             <div class="order-items">
@@ -102,16 +111,74 @@ function renderOrders() {
             ${order.note ? `<div class="order-note">📝 ${escapeHtml(order.note)}</div>` : ""}
 
             <div class="order-actions">
-                ${drinks.length ? `<button class="wa-btn" onclick="sendWhatsApp(${order.id}, 'minuman')">📱 Kirim Minuman</button>` : ""}
-                ${foods.length ? `<button class="wa-btn" onclick="sendWhatsApp(${order.id}, 'makanan')">📱 Kirim Makanan</button>` : ""}
-                <select onchange="changeStatus(${order.id}, this.value)">
-                    <option value="">Ubah status...</option>
-                    <option value="waiting">Menunggu</option>
-                    <option value="making">Sedang dibuat</option>
-                    <option value="ready">Siap</option>
-                    <option value="done">Selesai</option>
-                </select>
-            </div>
+
+    ${
+        order.payment_method === "qris" &&
+        order.payment_status !== "paid"
+        ? `
+            <button
+                class="verify-payment-btn"
+                onclick="verifyPayment(${order.id})">
+                💳 Verifikasi QRIS
+            </button>
+        `
+        : ""
+    }
+
+    ${
+        drinks.length
+        ? `
+            <button
+                class="wa-btn"
+                ${
+                    order.payment_method === "qris" &&
+                    order.payment_status !== "paid"
+                    ? "disabled"
+                    : ""
+                }
+                onclick="sendWhatsApp(${order.id}, 'minuman')">
+                📱 Kirim Minuman
+            </button>
+        `
+        : ""
+    }
+
+    ${
+        foods.length
+        ? `
+            <button
+                class="wa-btn"
+                ${
+                    order.payment_method === "qris" &&
+                    order.payment_status !== "paid"
+                    ? "disabled"
+                    : ""
+                }
+                onclick="sendWhatsApp(${order.id}, 'makanan')">
+                📱 Kirim Makanan
+            </button>
+        `
+        : ""
+    }
+
+    <select
+        ${
+            order.payment_method === "qris" &&
+            order.payment_status !== "paid"
+            ? "disabled"
+            : ""
+        }
+        onchange="changeStatus(${order.id}, this.value)">
+
+        <option value="">Ubah status...</option>
+        <option value="waiting">Menunggu</option>
+        <option value="making">Sedang dibuat</option>
+        <option value="ready">Siap</option>
+        <option value="done">Selesai</option>
+
+    </select>
+
+</div>
         </article>`;
     }).join("");
 }
@@ -163,6 +230,54 @@ function sendWhatsApp(orderId, section) {
     window.open(url, "_blank");
 }
 
+async function verifyPayment(orderId) {
+
+    const yakin = confirm(
+        "Pastikan pembayaran QRIS sudah benar-benar masuk.\n\n" +
+        "Lanjutkan verifikasi pembayaran?"
+    );
+
+    if (!yakin) {
+        return;
+    }
+
+    try {
+
+        const res = await fetch(
+            "/api/orders/" + orderId + "/verify-payment",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const data = await res.json();
+
+        if (!data.success) {
+
+            alert(
+                data.message ||
+                "Gagal memverifikasi pembayaran."
+            );
+
+            return;
+        }
+
+        alert("✅ Pembayaran QRIS berhasil diverifikasi.");
+
+        loadOrders();
+
+    } catch (error) {
+
+        alert(
+            "Terjadi kesalahan saat memverifikasi pembayaran."
+        );
+
+    }
+}
+    
 async function changeStatus(id, status) {
     if (!status) return;
 
