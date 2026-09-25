@@ -875,7 +875,78 @@ def admin_orders():
 
         cur.close()
         conn.close()
+# =========================================================
+# ADMIN - VERIFIKASI PEMBAYARAN QRIS
+# =========================================================
 
+@app.post("/api/orders/<int:order_id>/verify-payment")
+def verify_payment(order_id):
+
+    conn = get_db()
+    cur = conn.cursor(dictionary=True)
+
+    try:
+        cur.execute(
+            """
+            SELECT
+                id,
+                payment_method,
+                payment_status
+            FROM orders
+            WHERE id=%s
+            """,
+            (order_id,)
+        )
+
+        order = cur.fetchone()
+
+        if not order:
+            return jsonify({
+                "success": False,
+                "message": "Pesanan tidak ditemukan."
+            }), 404
+
+        # Hanya QRIS yang perlu diverifikasi
+        if order["payment_method"] != "qris":
+            return jsonify({
+                "success": False,
+                "message": "Pesanan ini menggunakan COD."
+            }), 400
+
+        if order["payment_status"] == "paid":
+            return jsonify({
+                "success": False,
+                "message": "Pembayaran sudah diverifikasi."
+            }), 400
+
+        cur.execute(
+            """
+            UPDATE orders
+            SET payment_status='paid'
+            WHERE id=%s
+            """,
+            (order_id,)
+        )
+
+        conn.commit()
+
+        return jsonify({
+            "success": True,
+            "message": "Pembayaran QRIS berhasil diverifikasi."
+        })
+
+    except Error as e:
+
+        conn.rollback()
+
+        return jsonify({
+            "success": False,
+            "message": str(e)
+        }), 500
+
+    finally:
+        cur.close()
+        conn.close()
 
 # =========================================================
 # ADMIN - UBAH STATUS
@@ -922,6 +993,41 @@ def update_status(order_id):
 
     conn = get_db()
     cur = conn.cursor()
+        # QRIS harus sudah diverifikasi sebelum pesanan diproses
+    cur.execute(
+        """
+        SELECT payment_method, payment_status
+        FROM orders
+        WHERE id=%s
+        """,
+        (order_id,)
+    )
+
+    order = cur.fetchone()
+
+    if not order:
+        cur.close()
+        conn.close()
+
+        return jsonify({
+            "success": False,
+            "message": "Pesanan tidak ditemukan."
+        }), 404
+
+    payment_method, payment_status = order
+
+    if (
+        payment_method == "qris"
+        and payment_status != "paid"
+        and status != "waiting"
+    ):
+        cur.close()
+        conn.close()
+
+        return jsonify({
+            "success": False,
+            "message": "Pembayaran QRIS belum diverifikasi. Pesanan belum boleh diproses."
+        }), 400
 
     try:
 
