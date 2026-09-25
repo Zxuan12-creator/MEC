@@ -2609,3 +2609,38 @@ footer{background:#2b1e17}
         box-sizing: border-box;
     }
 }
+
+.payment-paid {
+    color: #18794e;
+    font-weight: 700;
+}
+
+.payment-pending {
+    color: #a15c00;
+    font-weight: 700;
+}
+
+.payment-cod {
+    color: #555;
+    font-weight: 700;
+}
+
+.verify-payment-btn {
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    background: #f0b429;
+    color: #3d2b00;
+}
+
+.verify-payment-btn:hover {
+    opacity: 0.9;
+}
+
+.order-actions button:disabled,
+.order-actions select:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
