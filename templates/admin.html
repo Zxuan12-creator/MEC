@@ -104,8 +104,33 @@ function renderOrders() {
             </div>
 
             <div class="order-items">
-                ${drinks.length ? `<div class="section-order"><b>🧋 BAGIAN MINUMAN</b>${itemsHtml(drinks)}</div>` : ""}
-                ${foods.length ? `<div class="section-order"><b>🍱 BAGIAN MAKANAN</b>${itemsHtml(foods)}</div>` : ""}
+                ${drinks.length ? `
+    <button
+        class="wa-btn"
+        ${
+            order.payment_method === "qris" &&
+            order.payment_status !== "paid"
+            ? "disabled"
+            : ""
+        }
+        onclick="sendWhatsApp(${order.id}, 'minuman')">
+        🧋 Kirim ke Grup Minuman
+    </button>
+` : ""}
+
+${foods.length ? `
+    <button
+        class="wa-btn"
+        ${
+            order.payment_method === "qris" &&
+            order.payment_status !== "paid"
+            ? "disabled"
+            : ""
+        }
+        onclick="sendWhatsApp(${order.id}, 'makanan')">
+        🍱 Kirim ke Grup Makanan
+    </button>
+` : ""}
             </div>
 
             ${order.note ? `<div class="order-note">📝 ${escapeHtml(order.note)}</div>` : ""}
