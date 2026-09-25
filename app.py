@@ -34,11 +34,11 @@ def get_db():
 # =========================================================
 
 STAFF_WHATSAPP = {
-    "minuman": "628817297054",
-    "makanan": "",
+    "minuman": "628817297054, 6288221275521",
+    "makanan": "6288221275521, 628817297054",
 }
 
-CUSTOMER_SERVICE_WHATSAPP = ""
+CUSTOMER_SERVICE_WHATSAPP = "6285184803973"
 
 DELIVERY_FEE = 2000
 
