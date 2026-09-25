@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Pesanan - MEC Mart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="status-body">
+<div class="status-page">
+    <a href="/" class="back">← Kembali ke MEC Mart</a>
+    <div class="status-card">
+        <span class="eyebrow">MEC MART</span>
+        <h1>Status Pesanan</h1>
+        <p class="muted">Masukkan nomor HP yang dipakai saat checkout. Tidak perlu nomor pesanan.</p>
+
+        <div class="status-search">
+            <input id="phoneNumber" type="tel" placeholder="Contoh: 081234567890">
+            <button class="primary-btn" onclick="checkStatus()">Cek Status</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+</div>
+
+<script>
+function rupiah(n) {
+    return "Rp" + Number(n || 0).toLocaleString("id-ID");
+}
+
+async function checkStatus() {
+    const phone = document.getElementById("phoneNumber").value.trim();
+    const result = document.getElementById("result");
+
+    if (!phone) {
+        result.innerHTML = '<p class="error">Masukkan nomor HP yang dipakai saat checkout.</p>';
+        return;
+    }
+
+    result.innerHTML = '<p class="muted">Memuat status pesanan...</p>';
+
+    try {
+        const res = await fetch("/api/order-status?phone=" + encodeURIComponent(phone));
+        const data = await res.json();
+
+        if (!data.success) {
+            result.innerHTML = '<p class="error">' + (data.message || 'Pesanan tidak ditemukan.') + '</p>';
+            return;
+        }
+
+        const o = data.order;
+
+        const steps = [
+            ["waiting", "🟡", "Pesanan diterima"],
+            ["making", "🟠", "Sedang dibuat"],
+            ["ready", "🔵", "Siap diambil / diantar"],
+            ["done", "🟢", "Selesai"]
+        ];
+
+        const currentIndex = steps.findIndex(s => s[0] === o.status);
+
+        result.innerHTML = `
+            <div class="status-result">
+                <div class="big-queue">#${String(o.queue_number).padStart(3, "0")}</div>
+                <p class="muted">Pesanan terbaru untuk nomor HP ini</p>
+                <h2>${o.customer_name}</h2>
+                <p>${o.delivery_method === "delivery" ? "🛵 Delivery ke " + (o.class_name || "-") : "🚶 Ambil sendiri"}</p>
+
+                <div class="progress">
+                    ${steps.map((s, i) => `
+                        <div class="progress-step ${i <= currentIndex ? "active" : ""}">
+                            <span>${s[1]}</span><small>${s[2]}</small>
+                        </div>
+                    `).join("")}
+                </div>
+
+                <div class="status-summary">
+                    <b>Pesanan</b>
+                    ${o.items.map(i => `<div>${i.product_name} × ${i.quantity} — ${rupiah(i.subtotal)}</div>`).join("")}
+                    <hr>
+                    <div>Subtotal: ${rupiah(o.subtotal)}</div>
+                    <div>Delivery: ${rupiah(o.delivery_fee)}</div>
+                    <strong>Total: ${rupiah(o.total)}</strong>
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        console.error(e);
+        result.innerHTML = '<p class="error">Terjadi kesalahan koneksi ke server.</p>';
+    }
+}
+
+// Kalau halaman dibuka dari tombol "Lihat Status Pesanan", nomor HP
+// bisa ikut dikirim otomatis lewat URL sehingga customer tidak mengetik lagi.
+const params = new URLSearchParams(window.location.search);
+const savedPhone = params.get("phone");
+if (savedPhone) {
+    document.getElementById("phoneNumber").value = savedPhone;
+    checkStatus();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUTU ENTERPREUNER CLUB MART</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <div class="logo-icon">M</div>
+        <div class="logo-text">
+            <h1>MUTU</h1>
+            <span>ENTERPREUNER CLUB MART</span>
+        </div>
+    </div>
+    <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Cari makanan atau minuman...">
+        <button type="button" onclick="searchProducts()">🔍</button>
+    </div>
+    <div class="header-actions">
+        <button class="cart-btn" type="button" onclick="openCart()">🛒 <span>Keranjang</span> <b id="cartCount">0</b></button>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#home">Home</a>
+        <a href="#minuman">🥤 Minuman</a>
+        <a href="#makanan">🍱 Makanan</a>
+        <a href="#batik">🧵 Batik</a>
+        <a href="#tentang">ℹ️ Tentang MEC</a>
+        <a href="/status">📦 Cek Status</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div>
+            <span class="hero-badge">☕ MEC FOOD &amp; DRINK</span>
+            <h2>Jajan Enak,<br><span>Harga Bersahabat.</span></h2>
+            <p>Nikmati berbagai pilihan makanan dan minuman dari MUTU ENTERPREUNER CLUB.</p>
+            <div class="hero-buttons">
+                <a href="#minuman" class="primary-button">Lihat Menu</a>
+                <a href="#batik" class="secondary-button">Batik Coming Soon</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div class="hero-card-icon">☕</div>
+            <h3>MENU MEC</h3>
+            <p>Minuman • Makanan • Batik</p>
+            <div class="hero-price">Mulai Rp5.000</div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature"><div class="feature-icon">💰</div><div><h3>Harga Pelajar</h3><p>Enak tanpa bikin kantong berat.</p></div></div>
+    <div class="feature"><div class="feature-icon">🥤</div><div><h3>Menu Beragam</h3><p>Minuman dan makanan pilihan MEC.</p></div></div>
+    <div class="feature"><div class="feature-icon">🎓</div><div><h3>Karya Siswa</h3><p>Dikembangkan oleh anggota MEC.</p></div></div>
+    <div class="feature"><div class="feature-icon">🧵</div><div><h3>Batik Segera Hadir</h3><p>Nantikan koleksi batik MEC.</p></div></div>
+</section>
+
+<section class="section" id="minuman">
+    <div class="section-heading">
+        <div><span class="section-label">MENU MEC</span><h2>Minuman</h2></div>
+        <p>Minuman favorit untuk menemani aktivitasmu.</p>
+    </div>
+    <div id="drinkGrid" class="product-grid"></div>
+</section>
+
+<section class="section" id="makanan">
+    <div class="section-heading">
+        <div><span class="section-label">MENU MEC</span><h2>Makanan</h2></div>
+        <p>Menu makanan MEC akan terus bertambah.</p>
+    </div>
+    <div id="foodGrid" class="product-grid"></div>
+</section>
+
+<section class="batik-coming-soon" id="batik">
+    <div class="batik-content">
+        <span class="coming-badge">✨ COMING SOON</span>
+        <div class="batik-icon">🧵</div>
+        <h2>BATIK MEC</h2>
+        <p>Koleksi batik dari MUTU ENTERPREUNER CLUB sedang dipersiapkan untuk kamu.</p>
+        <div class="coming-title">SEGERA HADIR</div>
+        <span class="coming-text">Nantikan produk batik dan karya lokal MEC.</span>
+    </div>
+</section>
+
+<section class="about" id="tentang">
+    <div class="about-content">
+        <span class="section-label">TENTANG KAMI</span>
+        <h2>MUTU ENTERPREUNER CLUB</h2>
+        <p>MUTU ENTERPREUNER CLUB merupakan wadah kreativitas dan kewirausahaan siswa. Melalui MEC Mart, kami menghadirkan berbagai produk makanan, minuman, dan karya kreatif.</p>
+        <p>Setiap produk menjadi bagian dari proses belajar siswa dalam mengembangkan jiwa kewirausahaan.</p>
+    </div>
+    <div class="about-stats">
+        <div><strong>8+</strong><span>Minuman</span></div>
+        <div><strong>6+</strong><span>Makanan</span></div>
+        <div><strong>1</strong><span>Batik Coming Soon</span></div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-main">
+        <div><div class="footer-logo">MUTU</div><p>ENTERPREUNER CLUB MART</p><span>Food • Drink • Creative</span></div>
+        <div><h3>Menu</h3><a href="#home">Home</a><a href="#minuman">Minuman</a><a href="#makanan">Makanan</a><a href="#batik">Batik</a></div>
+        <div><h3>MEC</h3><a href="#tentang">Tentang Kami</a><a href="/status">Cek Status Pesanan</a></div>
+    </div>
+    <div class="footer-bottom">© 2026 MUTU ENTERPREUNER CLUB MART</div>
+</footer>
+
+
+<!-- KERANJANG -->
+<div id="cartOverlay" class="cart-overlay" onclick="closeCartOutside(event)">
+    <div class="cart-panel" onclick="event.stopPropagation()">
+        <div class="cart-header"><div><span>PESANAN</span><h2>Keranjang</h2></div><button class="close-cart" onclick="closeCart()">×</button></div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer"><div class="cart-total"><span>Total</span><strong id="cartTotal">Rp0</strong></div><button class="checkout" onclick="openCheckout()">Checkout</button></div>
+    </div>
+</div>
+
+<!-- CHECKOUT -->
+<div id="checkoutOverlay" class="overlay hidden">
+    <div class="checkout-modal">
+        <button class="close" onclick="closeCheckout()">×</button>
+        <h2>Checkout</h2>
+        <div class="checkout-layout">
+            <div>
+                <h3>Data Pemesan</h3>
+                <label>Nama<input id="customerName" type="text" placeholder="Nama kamu"></label>
+                <label>No. HP<input id="customerPhone" type="tel" placeholder="08xxxxxxxxxx"></label>
+                <h3>Metode Penerimaan</h3>
+                <div class="choice">
+                    <label class="choice-card"><input type="radio" name="delivery" value="pickup" checked onchange="toggleDelivery()"><span>🚶 <b>Ambil Sendiri</b><small>Ambil di MEC Mart • Gratis</small></span></label>
+                    <label class="choice-card"><input type="radio" name="delivery" value="delivery" onchange="toggleDelivery()"><span>🛵 <b>Delivery ke Kelas</b><small>Diantar ke kelas • +Rp2.000</small></span></label>
+                </div>
+                <div id="deliveryFields" class="hidden">
+                    <label>Kelas<input id="className" type="text" placeholder="Contoh: XII RPL 1"></label>
+                    <label>Catatan lokasi<textarea id="address" placeholder="Contoh: depan lab komputer"></textarea></label>
+                </div>
+                <label>Catatan pesanan<textarea id="note" placeholder="Catatan tambahan..."></textarea></label>
+                <h3>Pembayaran</h3>
+                <div class="choice">
+                    <label class="choice-card"><input type="radio" name="payment" value="qris" checked onchange="togglePayment()"><span>📱 <b>QRIS</b><small>Bayar dengan QRIS</small></span></label>
+                    <label class="choice-card"><input type="radio" name="payment" value="cod" onchange="togglePayment()"><span>💵 <b>COD</b><small>Bayar saat pesanan diterima</small></span></label>
+                </div>
+                <div id="qrisBox" class="qris-box"><div class="qris-placeholder">QRIS MEC</div><p>Gunakan QRIS MEC untuk pembayaran. Konfirmasi pembayaran mengikuti prosedur petugas.</p></div>
+            </div>
+            <div class="summary">
+                <h3>Ringkasan</h3><div id="checkoutSummary"></div>
+                <div class="summary-line"><span>Subtotal</span><b id="checkoutSubtotal">Rp0</b></div>
+                <div class="summary-line"><span>Delivery</span><b id="checkoutDelivery">Rp0</b></div>
+                <div class="summary-total"><span>Total</span><b id="checkoutTotal">Rp0</b></div>
+                <button id="submitOrderBtn" class="checkout" onclick="submitOrder()">Buat Pesanan</button>
+                <p id="checkoutMessage" class="message"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SUKSES -->
+<div id="successOverlay" class="overlay hidden">
+    <div class="success-modal">
+        <div class="success-icon">✓</div>
+        <h2>Pesanan Berhasil!</h2>
+        <p>Nomor antrian kamu:</p>
+        <div id="successQueue" class="queue-number">#000</div>
+        <p id="successOrder" class="muted"></p>
+        <div id="successInfo" class="success-info"></div>
+        <a id="statusLink" class="checkout full" href="#">Lihat Status Pesanan</a>
+        <button class="secondary-btn full" onclick="closeSuccess()">Tutup</button>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
